@@ -2,13 +2,13 @@ var express = require('express');
 var router = express.Router();
 var request = require('request-promise');
 
-router.get('/:query/:offset', function (req, res) {
+router.get('/:query', function (req, res) {
 	var options = {
 		uri: 'https://api.cognitive.microsoft.com/bing/v5.0/images/search',
 		qs: {
 			q: req.params.query,
 			count: 10,
-			offset: req.params.offset * 10
+			offset: req.query.offset || 0
 		},
 		headers: {
 			'Ocp-Apim-Subscription-Key': 'ce079cfbecfa4501bf339e6666a40fdd'

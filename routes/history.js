@@ -6,7 +6,7 @@ let Query = require('../models/Query');
 
 router.get('/', function (req, res) {
 	var recentSearches = [];
-	Query.find({}, '-_id, -__v', function (err, doc) {
+	Query.find({}, '-_id -__v', function (err, doc) {
 		if (err) {
 			res.send(err)
 		} else {

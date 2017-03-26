@@ -12,7 +12,7 @@ router.get('/:query', function (req, res) {
 		qs: {
 			q: search_term,
 			count: 10,
-			offset: req.query.offset || 0
+			offset: req.query.offset * 10 || 0
 		},
 		headers: {
 			'Ocp-Apim-Subscription-Key': 'ce079cfbecfa4501bf339e6666a40fdd'

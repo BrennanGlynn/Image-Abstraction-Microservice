@@ -12,7 +12,7 @@ router.get('/', function (req, res) {
 		} else {
 			res.send(doc)
 		}
-	})
+	}).limit(10);
 });
 
 module.exports = router;

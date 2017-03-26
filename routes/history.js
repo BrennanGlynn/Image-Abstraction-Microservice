@@ -6,11 +6,11 @@ let Query = require('../models/Query');
 
 router.get('/', function (req, res) {
 	var recentSearches = [];
-	Query.find({}, function (err, doc) {
+	Query.find({}, '-_id, -__v', function (err, doc) {
 		if (err) {
 			res.send(err)
 		} else {
-			res.send(doc)
+			res.json({"queries": doc});
 		}
 	}).limit(10);
 });

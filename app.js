@@ -7,8 +7,12 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var search = require('./routes/search');
+var history = require('./routes/history');
 
 var app = express();
+
+// set up database
+require('./models/database');
 
 
 // view engine setup
@@ -22,6 +26,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/history', history);
 app.use('/search', search);
 app.use('/', index);
 

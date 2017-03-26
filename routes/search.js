@@ -2,11 +2,15 @@ var express = require('express');
 var router = express.Router();
 var request = require('request-promise');
 
+var db = require('../models/database');
+let Query = require('../models/Query');
+
 router.get('/:query', function (req, res) {
+	var search_term = req.params.query;
 	var options = {
 		uri: 'https://api.cognitive.microsoft.com/bing/v5.0/images/search',
 		qs: {
-			q: req.params.query,
+			q: search_term,
 			count: 10,
 			offset: req.query.offset || 0
 		},
@@ -20,6 +24,16 @@ router.get('/:query', function (req, res) {
 	.then(function (response) {
 		var results = [];
 
+		var tracked = new Query({
+			"term": search_term,
+			"when": new Date()
+		});
+
+		tracked.save(function (err) {
+			if (err) return res.json(err);
+			console.log("Saved query")
+		});
+
 		for (image in response.value) {
 			results.push({
 				"url": response.value[image].contentUrl,
@@ -28,6 +42,7 @@ router.get('/:query', function (req, res) {
 				"hostUrl": response.value[image].hostPageUrl
 			});
 		}
+
 
 		res.send(results);
 	})

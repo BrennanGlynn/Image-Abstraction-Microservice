@@ -12,7 +12,7 @@ router.get('/', function (req, res) {
 		} else {
 			res.json({"queries": doc});
 		}
-	}).sort('-when').limit(10);
+	}).sort('-_id').limit(10);
 });
 
 module.exports = router;
